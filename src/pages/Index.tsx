@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -39,6 +40,7 @@ interface Category {
 }
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentUser] = useState<User>({
     id: 1,
     name: 'Гость',
@@ -212,6 +214,7 @@ const Index = () => {
                   <Card 
                     key={category.id} 
                     className="p-5 bg-secondary border-border hover:bg-secondary/80 transition-all cursor-pointer group"
+                    onClick={() => navigate(`/category/${category.id}`)}
                   >
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/30 transition-colors">
@@ -246,6 +249,7 @@ const Index = () => {
                   <Card 
                     key={topic.id}
                     className="p-4 bg-secondary border-border hover:bg-secondary/80 transition-all cursor-pointer group"
+                    onClick={() => navigate(`/topic/${topic.id}`)}
                   >
                     <div className="flex items-start gap-3">
                       <Avatar className="w-10 h-10 flex-shrink-0">
