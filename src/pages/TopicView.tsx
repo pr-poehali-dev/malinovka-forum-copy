@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,18 +24,32 @@ const TopicView = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [replyText, setReplyText] = useState('');
+  const [topic, setTopic] = useState<any>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
 
-  const topic = {
-    id: Number(id) || 1,
-    title: 'Обновление сервера - новые возможности для игроков',
-    category: 'Новости и объявления',
-    author: 'Администратор',
-    views: 892,
-    isPinned: true,
-    isLocked: false
-  };
+  useEffect(() => {
+    const allTopics = JSON.parse(localStorage.getItem('forum_topics') || '[]');
+    const foundTopic = allTopics.find((t: any) => t.id === Number(id));
+    
+    if (foundTopic) {
+      setTopic(foundTopic);
+      setPosts(foundTopic.posts || []);
+    } else {
+      setTopic({
+        id: Number(id) || 1,
+        title: 'Обновление сервера - новые возможности для игроков',
+        category: 'Новости и объявления',
+        author: 'Администратор',
+        views: 892,
+        replies: 4,
+        isPinned: true,
+        isLocked: false
+      });
+      setPosts(defaultPosts);
+    }
+  }, [id]);
 
-  const posts: Post[] = [
+  const defaultPosts: Post[] = [
     {
       id: 1,
       author: 'Администратор',
@@ -81,7 +95,7 @@ const TopicView = () => {
       reputation: 1456,
       posts: 567
     }
-  ];
+  ];\n\n  if (!topic) {\n    return (\n      <div className=\"min-h-screen bg-background flex items-center justify-center\">\n        <div className=\"text-center\">\n          <Icon name=\"Loader2\" size={48} className=\"text-primary animate-spin mx-auto mb-4\" />\n          <p className=\"text-muted-foreground\">Загрузка...</p>\n        </div>\n      </div>\n    );\n  }
 
   const getRoleBadge = (role: UserRole) => {
     const roleConfig = {
@@ -167,7 +181,7 @@ const TopicView = () => {
               <Separator orientation="vertical" className="h-4" />
               <span className="flex items-center gap-1">
                 <Icon name="MessageSquare" size={14} />
-                {posts.length} ответов
+                {topic.replies || posts.length - 1} ответов
               </span>
             </div>
           </Card>

@@ -76,6 +76,30 @@ const Index = () => {
       icon: 'Users'
     },
     {
+      id: 6,
+      name: 'ОПГ Гопота',
+      description: 'Форум нелегальной организации Гопота - набор, внутренние дела',
+      topics: 34,
+      posts: 567,
+      icon: 'Skull'
+    },
+    {
+      id: 7,
+      name: 'ОПГ Скинхеды',
+      description: 'Форум нелегальной организации Скинхеды - набор, внутренние дела',
+      topics: 28,
+      posts: 445,
+      icon: 'Flame'
+    },
+    {
+      id: 8,
+      name: 'ОПГ Кавказцы',
+      description: 'Форум нелегальной организации Кавказцы - набор, внутренние дела',
+      topics: 41,
+      posts: 678,
+      icon: 'Users'
+    },
+    {
       id: 4,
       name: 'Заявки и жалобы',
       description: 'Подача заявок в администрацию и жалобы на игроков',
@@ -184,6 +208,14 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
+              <Button 
+                variant="destructive" 
+                size="sm"
+                onClick={() => navigate('/admin')}
+              >
+                <Icon name="Shield" size={16} className="mr-2" />
+                Админ-панель
+              </Button>
               <Button variant="outline" size="sm">
                 <Icon name="LogIn" size={16} className="mr-2" />
                 Войти
